@@ -5,7 +5,7 @@
 
 TArray<TObjectPtr<UWidgetComponentBase>> UComponentBasedWidget::GetComponents() const
 {
-	return Components;
+	return Components.Components;
 }
 
 bool UComponentBasedWidget::Initialize()
