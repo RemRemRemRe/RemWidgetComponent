@@ -18,8 +18,7 @@ class WIDGETCOMPONENT_API UComponentBasedWidget : public UUserWidget
 
 #pragma region Data Members
 
-private:
-	UPROPERTY(EditAnywhere, Instanced, Category = Component)
+	UPROPERTY(EditAnywhere, Instanced, BlueprintGetter = GetComponents, Category = Component)
 	TArray<TObjectPtr<UWidgetComponentBase>> Components;
 
 #pragma endregion Data Members
@@ -27,7 +26,12 @@ private:
 #pragma region Members Accessors
 
 public:
-	FORCEINLINE TArray<TObjectPtr<UWidgetComponentBase>> GetComponents() const;
+	UFUNCTION(BlueprintCallable, Category = Component)
+	FORCEINLINE TArray<UWidgetComponentBase*> GetComponents() const;
+	
+	FORCEINLINE TArray<TObjectPtr<UWidgetComponentBase>> GetComponentsPtr() const;
+
+	FORCEINLINE FArrayProperty* GetComponentsProperty() const;
 	
 #pragma endregion Members Accessors
 	
