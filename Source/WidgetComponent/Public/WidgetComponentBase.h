@@ -25,6 +25,12 @@ class WIDGETCOMPONENT_API UWidgetComponentBase : public UUserWidgetExtension
 	
 public:
 
+#pragma region Object
+
+	virtual void PreDuplicate(FObjectDuplicationParameters& DupParams) override;
+
+#pragma endregion Object
+
 #pragma region UserWidgetExtension Interface
 	
 	virtual void Initialize() override;

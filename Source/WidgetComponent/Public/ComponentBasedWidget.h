@@ -37,4 +37,11 @@ public:
 	
 public:
 	virtual bool Initialize() override;
+
+#if WITH_EDITOR
+	
+	virtual void PostCDOCompiled(const FPostCDOCompiledContext& Context) override;
+
+#endif
+	
 };

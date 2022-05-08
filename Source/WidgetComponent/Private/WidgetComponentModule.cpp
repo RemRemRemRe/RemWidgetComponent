@@ -9,7 +9,7 @@ class FWidgetComponentModule : public IWidgetComponentModule
 	virtual void ShutdownModule() override;
 };
 
-IMPLEMENT_MODULE(FWidgetComponentModule, WidgetComponentModule)
+IMPLEMENT_MODULE(FWidgetComponentModule, WidgetComponent)
 
 void FWidgetComponentModule::StartupModule()
 {

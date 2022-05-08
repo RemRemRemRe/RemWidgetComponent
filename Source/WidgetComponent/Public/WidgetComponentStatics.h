@@ -22,9 +22,21 @@ public:
 
 namespace WidgetComponentStatics
 {
-	void ForeachUserWidgetComponent(const UWidgetComponentAsExtension* Extension,
-		TFunctionRef<void(UWidgetComponentBase*)> Predicate);
+	WIDGETCOMPONENT_API
+	void ForeachUserWidgetComponent(const UUserWidget* UserWidget,
+		TFunctionRef<void(UWidgetComponentBase** MemberPtr, int32 Index)> Predicate);
 
+	WIDGETCOMPONENT_API
+	void ForeachUserWidgetComponent(const UWidgetComponentAsExtension* Extension,
+		TFunctionRef<void(UWidgetComponentBase** MemberPtr, int32 Index)> Predicate);
+
+	WIDGETCOMPONENT_API
 	void AddComponentsToWidgetExtension(const UWidgetComponentAsExtension* Extension);
+	
+	WIDGETCOMPONENT_API
 	void LinkSoftObjectToRuntimeVariable(const UWidgetComponentAsExtension* Extension);
+
+	WIDGETCOMPONENT_API
+	void RemoveWidgetComponentAsExtension(UUserWidget* UserWidget);
+	
 }

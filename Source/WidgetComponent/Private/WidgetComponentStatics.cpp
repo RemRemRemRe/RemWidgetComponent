@@ -5,6 +5,7 @@
 
 #include "WidgetComponentAsExtension.h"
 #include "WidgetComponentBase.h"
+#include "WidgetComponentLog.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetTree.h"
 #include "Macro/AssertionMacros.h"
@@ -13,31 +14,50 @@
 
 namespace WidgetComponentStatics
 {
+void ForeachUserWidgetComponent(const UUserWidget* UserWidget,
+	const TFunctionRef<void(UWidgetComponentBase** MemberPtr, int32 Index)> Predicate)
+{
+	CheckPointer(UserWidget, return;);
+	ForeachUserWidgetComponent(UserWidget->GetExtension<UWidgetComponentAsExtension>(), Predicate);
+}
 
 void WidgetComponentStatics::ForeachUserWidgetComponent(const UWidgetComponentAsExtension* Extension,
-	const TFunctionRef<void(UWidgetComponentBase*)> Predicate)
+	const TFunctionRef<void(UWidgetComponentBase** MemberPtr, int32 Index)> Predicate)
 {
+	CheckPointer(Extension, return;);
+	
 	const FArrayProperty* ComponentsProperty = Extension->GetComponentsProperty();
 
 	CheckCondition(Common::PropertyHelper::IsPropertyClassChildOf(ComponentsProperty->Inner,
 		UWidgetComponentBase::StaticClass()), return;);
 
 	Common::ObjectStatics::ForeachObjectInArray(ComponentsProperty, Extension->GetUserWidget(),
-		[&] (UObject* Object)
+		[&] (void* ObjectMemberPtr, const int32 Index)
 	{
-		UWidgetComponentBase* Component = Cast<UWidgetComponentBase>(Object);
-		CheckPointer(Component, return;);
+		UWidgetComponentBase** MemberPtr = static_cast<UWidgetComponentBase**>(ObjectMemberPtr);
 
-		Predicate(Component);
+		Predicate(MemberPtr, Index);
 	});
 }
 
 void AddComponentsToWidgetExtension(const UWidgetComponentAsExtension* Extension)
 {
-	ForeachUserWidgetComponent(Extension,
-	[&](UWidgetComponentBase* Component)
+	CheckPointer(Extension, return;);
+
+	CheckPointer(Extension->GetUserWidget(), return;);
+	
+	if (Extension->GetUserWidget()->IsDesignTime())
 	{
-		Extension->GetUserWidget()->AddExtension(Component);
+		return;
+	}
+	
+	ForeachUserWidgetComponent(Extension,
+	[&](UWidgetComponentBase** ObjectMemberPtr, int32)
+	{
+		UWidgetComponentBase* ComponentBase = *ObjectMemberPtr;
+		CheckPointer(ComponentBase, return);
+		
+		Extension->GetUserWidget()->AddExtension(ComponentBase);
 	});
 }
 
@@ -61,10 +81,13 @@ void WidgetComponentStatics::LinkSoftObjectToRuntimeVariable(const UWidgetCompon
 	});
 
 	ForeachUserWidgetComponent(Extension,
-	[&] (const UWidgetComponentBase* Component)
+	[&] (UWidgetComponentBase** ObjectMemberPtr, int32)
 	{
-		Common::PropertyHelper::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), Component, [&]
-		(const FProperty* InProperty, const void* InContainer, int32,
+		const UWidgetComponentBase* Component = *ObjectMemberPtr;
+		CheckPointer(Component, return);
+		
+		Common::PropertyHelper::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), Component,
+		[&] (const FProperty* InProperty, const void* InContainer, int32,
 		const FString&, const FString&, const FString&, int32, int32)
 		{
 			const FSoftObjectProperty* SoftObjectProperty = CastField<FSoftObjectProperty>(const_cast<FProperty*>(InProperty));
@@ -89,7 +112,25 @@ void WidgetComponentStatics::LinkSoftObjectToRuntimeVariable(const UWidgetCompon
 		});
 	});
 }
+
+void RemoveWidgetComponentAsExtension(UUserWidget* UserWidget)
+{
+	CheckPointer(UserWidget, return;);
 	
+	for (;;)
+	{
+		UWidgetComponentAsExtension* Extension = UserWidget->GetExtension<UWidgetComponentAsExtension>();
+		if (!Extension)
+		{
+			break;
+		}
+		
+		UE_LOG(LogWidgetComponent, Log, TEXT("Extension : %s of UserWidget : %s removed"), *Extension->GetName(), *UserWidget->GetName());
+		UserWidget->RemoveExtension(Extension);
+
+		Extension->MarkAsGarbage();
+	}
+}
 }
 
 	
