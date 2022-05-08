@@ -37,6 +37,6 @@ namespace WidgetComponentStatics
 	void LinkSoftObjectToRuntimeVariable(const UWidgetComponentAsExtension* Extension);
 
 	WIDGETCOMPONENT_API
-	void RemoveWidgetComponentAsExtension(UUserWidget* UserWidget);
+	UWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* UserWidget);
 	
 }

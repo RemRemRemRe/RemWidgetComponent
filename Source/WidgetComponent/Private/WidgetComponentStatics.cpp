@@ -113,24 +113,21 @@ void WidgetComponentStatics::LinkSoftObjectToRuntimeVariable(const UWidgetCompon
 	});
 }
 
-void RemoveWidgetComponentAsExtension(UUserWidget* UserWidget)
+UWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* UserWidget)
 {
-	CheckPointer(UserWidget, return;);
-	
-	for (;;)
-	{
-		UWidgetComponentAsExtension* Extension = UserWidget->GetExtension<UWidgetComponentAsExtension>();
-		if (!Extension)
-		{
-			break;
-		}
-		
-		UE_LOG(LogWidgetComponent, Log, TEXT("Extension : %s of UserWidget : %s removed"), *Extension->GetName(), *UserWidget->GetName());
-		UserWidget->RemoveExtension(Extension);
+	CheckPointer(UserWidget, return {};);
 
-		Extension->MarkAsGarbage();
+	UWidgetComponentAsExtension* Extension = UserWidget->GetExtension<UWidgetComponentAsExtension>();
+	if (!Extension)
+	{
+		Extension = UserWidget->AddExtension<UWidgetComponentAsExtension>();
 	}
+
+	CheckPointer(Extension);
+
+	return Extension;
 }
+	
 }
 
 	

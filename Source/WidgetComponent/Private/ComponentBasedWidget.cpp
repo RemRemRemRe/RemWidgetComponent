@@ -26,16 +26,13 @@ FArrayProperty* UComponentBasedWidget::GetComponentsProperty() const
 
 bool UComponentBasedWidget::Initialize()
 {
-#if WITH_EDITOR
-	WidgetComponentStatics::RemoveWidgetComponentAsExtension(this);
-#endif
-	
-	UWidgetComponentAsExtension* Component = AddExtension<UWidgetComponentAsExtension>();
-	CheckPointer(Component, return {});
+	if (UWidgetComponentAsExtension* Component = WidgetComponentStatics::GetOrAddWidgetComponentAsExtension(this);
+		ensureAlways(Component))
+	{
+		Component->SetComponentsFiledPath(GetComponentsProperty());
 
-	Component->SetComponentsFiledPath(GetComponentsProperty());
-
-	WidgetComponentStatics::AddComponentsToWidgetExtension(Component);
+		WidgetComponentStatics::AddComponentsToWidgetExtension(Component);
+	}
 	
 	return Super::Initialize();
 }
@@ -47,14 +44,9 @@ void UComponentBasedWidget::PostCDOCompiled(const FPostCDOCompiledContext& Conte
 	Super::PostCDOCompiled(Context);
 
 	// CDO will not run Initialize, so add the component here
-
-	WidgetComponentStatics::RemoveWidgetComponentAsExtension(this);
-	
-	UWidgetComponentAsExtension* Extension = AddExtension<UWidgetComponentAsExtension>();
+	UWidgetComponentAsExtension* Extension = WidgetComponentStatics::GetOrAddWidgetComponentAsExtension(this);;
 	CheckPointer(Extension, return);
 
-	Extension->SetFlags(RF_Transient);
-	
 	Extension->SetComponentsFiledPath(GetComponentsProperty());
 }
 
