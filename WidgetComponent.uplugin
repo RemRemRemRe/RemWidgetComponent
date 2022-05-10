@@ -25,10 +25,6 @@
 	],
 	"Plugins": [
 		{
-			"Name": "GameFramework",
-			"Enabled": true
-		},
-		{
 			"Name": "Common",
 			"Enabled": true
 		}

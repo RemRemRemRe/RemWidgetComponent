@@ -3,7 +3,7 @@
 
 #include "WidgetComponentBase.h"
 
-#include "GameFrameworkStatics.h"
+#include "Misc.h"
 #include "WidgetComponentStats.h"
 #include "Object/ObjectStatics.h"
 #include "WidgetComponentLog.h"
@@ -120,7 +120,7 @@ UUserWidget* UWidgetComponentBase::GetUserWidget() const
 
 void UWidgetComponentBase::InitializeComponent()
 {
-	bIsBlueprintObject = UGameFrameworkStatics::IsBlueprintObject(this);
+	bIsBlueprintObject = UObjectStatics::IsBlueprintObject(this);
 
 	using namespace Common::ObjectStatics;
 	bImplementedReceiveBeginPlay	= bIsBlueprintObject && IsImplementedInBlueprint(

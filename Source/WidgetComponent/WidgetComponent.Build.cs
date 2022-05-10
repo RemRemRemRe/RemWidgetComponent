@@ -17,7 +17,6 @@ namespace UnrealBuildTool.Rules
 					"CoreUObject",
 					"Engine",
 					"UMG",
-					"GameFramework",
 					"Common"
 				}
 			);
