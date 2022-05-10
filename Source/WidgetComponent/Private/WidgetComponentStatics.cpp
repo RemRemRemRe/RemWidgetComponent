@@ -44,9 +44,10 @@ void AddComponentsToWidgetExtension(const UWidgetComponentAsExtension* Extension
 {
 	CheckPointer(Extension, return;);
 
-	CheckPointer(Extension->GetUserWidget(), return;);
-	
-	if (Extension->GetUserWidget()->IsDesignTime())
+	UUserWidget* UserWidget = Extension->GetUserWidget();
+	CheckPointer(UserWidget, return;);
+
+	if (UserWidget->IsDesignTime())
 	{
 		return;
 	}
@@ -57,7 +58,7 @@ void AddComponentsToWidgetExtension(const UWidgetComponentAsExtension* Extension
 		UWidgetComponentBase* ComponentBase = *ObjectMemberPtr;
 		CheckPointer(ComponentBase, return);
 		
-		Extension->GetUserWidget()->AddExtension(ComponentBase);
+		UserWidget->AddExtension(ComponentBase);
 	});
 }
 
@@ -65,15 +66,16 @@ void WidgetComponentStatics::LinkSoftObjectToRuntimeVariable(const UWidgetCompon
 {
 	CheckPointer(Extension, return;);
 
-	CheckPointer(Extension->GetUserWidget(), return;);
+	UUserWidget* UserWidget = Extension->GetUserWidget();
+	CheckPointer(UserWidget, return;);
 
-	if (Extension->GetUserWidget()->IsDesignTime())
+	if (UserWidget->IsDesignTime())
 	{
 		return;
 	}
 
 	TMap<FName, UWidget*> NamedWidgetMap;
-	Extension->GetUserWidget()->WidgetTree->ForEachWidget([&] (UWidget* Widget)
+	UserWidget->WidgetTree->ForEachWidget([&] (UWidget* Widget)
 	{
 		CheckPointer(Widget, return);
 

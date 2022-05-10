@@ -47,6 +47,8 @@ void UComponentBasedWidget::PostCDOCompiled(const FPostCDOCompiledContext& Conte
 	UWidgetComponentAsExtension* Extension = WidgetComponentStatics::GetOrAddWidgetComponentAsExtension(this);;
 	CheckPointer(Extension, return);
 
+	Extension->SetFlags(RF_Transient);
+
 	Extension->SetComponentsFiledPath(GetComponentsProperty());
 }
 
