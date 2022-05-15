@@ -28,20 +28,20 @@ class WIDGETCOMPONENT_API UComponentBasedWidget : public UUserWidget
 public:
 	UFUNCTION(BlueprintCallable, Category = Component)
 	FORCEINLINE TArray<UWidgetComponentBase*> GetComponents() const;
-	
-	FORCEINLINE TArray<TObjectPtr<UWidgetComponentBase>> GetComponentsPtr() const;
+
+	FORCEINLINE TArray<TObjectPtr<UWidgetComponentBase>> GetComponentsObjectPtr() const;
 
 	FORCEINLINE FArrayProperty* GetComponentsProperty() const;
-	
+
 #pragma endregion Members Accessors
-	
+
 public:
 	virtual bool Initialize() override;
 
 #if WITH_EDITOR
-	
+
 	virtual void PostCDOCompiled(const FPostCDOCompiledContext& Context) override;
 
 #endif
-	
+
 };

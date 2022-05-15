@@ -12,7 +12,7 @@ TArray<UWidgetComponentBase*> UComponentBasedWidget::GetComponents() const
 	return Components;
 }
 
-TArray<TObjectPtr<UWidgetComponentBase>> UComponentBasedWidget::GetComponentsPtr() const
+TArray<TObjectPtr<UWidgetComponentBase>> UComponentBasedWidget::GetComponentsObjectPtr() const
 {
 	return Components;
 }
@@ -33,7 +33,7 @@ bool UComponentBasedWidget::Initialize()
 
 		WidgetComponentStatics::AddComponentsToWidgetExtension(Component);
 	}
-	
+
 	return Super::Initialize();
 }
 
