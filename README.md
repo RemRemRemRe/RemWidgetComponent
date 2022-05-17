@@ -31,9 +31,11 @@ struct FWidgetBinding
 };
 ```
 There is a better choice that do the "two things" at once : `TSoftObjectPtr`. It provides several benefits:
-- Stores full object path which including the member name, and it **should** take care of the object renaming automatically
-- `WeakPtr` is included
-- other engine features comes with it
+- It Stores object full path rather than object pointer, which allows the object address to change for being replaced or re-instanced because of recompiling or reopen the editor without losing the reference
+- When the relative object get renamed, it **should** also "renamed" automatically
+- `MemberName` is included in object full path
+- `WeakPtr` is included as a data member
+- Other engine features comes with it
 
 but with extra overhead:
 - `SubPathString` is a FString
