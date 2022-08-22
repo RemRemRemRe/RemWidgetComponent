@@ -38,7 +38,7 @@ public:
 	virtual bool RequiresTick() const override;
 	virtual void Tick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
-	FORCEINLINE UUserWidget* GetUserWidget() const;
+	UUserWidget* GetUserWidget() const;
 
 #pragma endregion UserWidgetExtension Interface
 	

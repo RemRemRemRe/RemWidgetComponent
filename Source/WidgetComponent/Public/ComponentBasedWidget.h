@@ -27,11 +27,11 @@ class WIDGETCOMPONENT_API UComponentBasedWidget : public UUserWidget
 
 public:
 	UFUNCTION(BlueprintCallable, Category = Component)
-	FORCEINLINE TArray<UWidgetComponentBase*> GetComponents() const;
+	TArray<UWidgetComponentBase*> GetComponents() const;
 
-	FORCEINLINE TArray<TObjectPtr<UWidgetComponentBase>> GetComponentsObjectPtr() const;
+	TArray<TObjectPtr<UWidgetComponentBase>> GetComponentsObjectPtr() const;
 
-	FORCEINLINE FArrayProperty* GetComponentsProperty() const;
+	FArrayProperty* GetComponentsProperty() const;
 
 #pragma endregion Members Accessors
 

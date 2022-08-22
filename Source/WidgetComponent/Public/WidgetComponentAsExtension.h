@@ -28,11 +28,11 @@ class WIDGETCOMPONENT_API UWidgetComponentAsExtension : public UWidgetComponentB
 #pragma endregion Data Members
 	
 public:
-	FORCEINLINE TFieldPath<FArrayProperty> GetComponentsFiledPath() const {	return ComponentsFiledPath; }
+	TFieldPath<FArrayProperty> GetComponentsFiledPath() const {	return ComponentsFiledPath; }
 	
-	FORCEINLINE void SetComponentsFiledPath(TFieldPath<FArrayProperty> InComponentsFiledPath);
+	void SetComponentsFiledPath(TFieldPath<FArrayProperty> InComponentsFiledPath);
 	
-	FORCEINLINE FArrayProperty* GetComponentsProperty() const;
+	FArrayProperty* GetComponentsProperty() const;
 
 #pragma region UserWidgetExtension Interface
 	
