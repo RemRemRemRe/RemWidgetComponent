@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+
 #include "WidgetComponentBase.h"
 #include "WidgetComponentAsExtension.generated.h"
 

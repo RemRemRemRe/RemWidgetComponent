@@ -4,7 +4,7 @@
 	"VersionName": "1.0",
 	"FriendlyName": "WidgetComponent",
 	"Description": "",
-	"Category": "Game Features",
+	"Category": "UI",
 	"CreatedBy": "RemRemRemRe",
 	"CreatedByURL": "",
 	"DocsURL": "",
@@ -14,13 +14,12 @@
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
-	"ExplicitlyLoaded": true,
 	"EnabledByDefault": false,
 	"BuiltInInitialFeatureState": "Active",
 	"Modules": [
 		{
-			"Name" : "WidgetComponent",
-			"Type" : "Runtime",
+			"Name": "WidgetComponent",
+			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
 	],
