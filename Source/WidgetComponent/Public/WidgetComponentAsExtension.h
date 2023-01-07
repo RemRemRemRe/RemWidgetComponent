@@ -2,7 +2,6 @@
 
 #pragma once
 
-
 #include "WidgetComponentBase.h"
 #include "WidgetComponentAsExtension.generated.h"
 

@@ -2,7 +2,6 @@
 
 #pragma once
 
-
 #include "Extensions/UserWidgetExtension.h"
 #include "WidgetComponentBase.generated.h"
 
@@ -37,8 +36,6 @@ public:
 	virtual void Destruct() override;
 	virtual bool RequiresTick() const override;
 	virtual void Tick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
-	UUserWidget* GetUserWidget() const;
 
 #pragma endregion UserWidgetExtension Interface
 	

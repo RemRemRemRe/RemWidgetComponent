@@ -113,11 +113,6 @@ void UWidgetComponentBase::Tick(const FGeometry& MyGeometry, const float InDelta
 	}
 }
 
-UUserWidget* UWidgetComponentBase::GetUserWidget() const
-{
-	return Super::GetUserWidget();
-}
-
 void UWidgetComponentBase::InitializeComponent()
 {
 	bIsBlueprintObject = UObjectStatics::IsBlueprintObject(this);

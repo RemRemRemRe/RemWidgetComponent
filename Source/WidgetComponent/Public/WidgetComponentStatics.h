@@ -2,7 +2,6 @@
 
 #pragma once
 
-
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "WidgetComponentStatics.generated.h"
 

@@ -2,7 +2,6 @@
 
 #pragma once
 
-
 #include "WidgetComponentBase.h"
 #include "UMG/Public/Blueprint/UserWidget.h"
 #include "ComponentBasedWidget.generated.h"

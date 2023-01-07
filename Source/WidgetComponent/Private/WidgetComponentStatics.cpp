@@ -31,7 +31,7 @@ void WidgetComponentStatics::ForeachUserWidgetComponent(const UWidgetComponentAs
 	CheckCondition(Common::PropertyHelper::IsPropertyClassChildOf(ComponentsProperty->Inner,
 		UWidgetComponentBase::StaticClass()), return;);
 
-	Common::ObjectStatics::ForeachObjectInArray(ComponentsProperty, Extension->GetUserWidget(),
+	Common::ObjectStatics::ForeachObjectInArray(ComponentsProperty, Extension->GetOuterUUserWidget(),
 		[&] (void* ObjectMemberPtr, const int32 Index)
 	{
 		UWidgetComponentBase** MemberPtr = static_cast<UWidgetComponentBase**>(ObjectMemberPtr);
@@ -44,7 +44,7 @@ void AddComponentsToWidgetExtension(const UWidgetComponentAsExtension* Extension
 {
 	CheckPointer(Extension, return;);
 
-	UUserWidget* UserWidget = Extension->GetUserWidget();
+	UUserWidget* UserWidget = Extension->GetOuterUUserWidget();
 	CheckPointer(UserWidget, return;);
 
 	if (UserWidget->IsDesignTime())
@@ -66,7 +66,7 @@ void WidgetComponentStatics::LinkSoftObjectToRuntimeVariable(const UWidgetCompon
 {
 	CheckPointer(Extension, return;);
 
-	UUserWidget* UserWidget = Extension->GetUserWidget();
+	UUserWidget* UserWidget = Extension->GetOuterUUserWidget();
 	CheckPointer(UserWidget, return;);
 
 	if (UserWidget->IsDesignTime())
@@ -131,5 +131,4 @@ UWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* Use
 }
 	
 }
-
 	
