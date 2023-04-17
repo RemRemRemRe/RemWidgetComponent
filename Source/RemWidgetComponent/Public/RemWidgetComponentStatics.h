@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "WidgetComponentStatics.generated.h"
+#include "RemWidgetComponentStatics.generated.h"
 
 class UWidgetComponentBase;
 class UWidgetComponentAsExtension;
@@ -12,30 +12,30 @@ class UWidgetComponentAsExtension;
  * 
  */
 UCLASS()
-class WIDGETCOMPONENT_API UWidgetComponentStatics : public UBlueprintFunctionLibrary
+class REMWIDGETCOMPONENT_API UWidgetComponentStatics : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
 public:
 };
 
-namespace WidgetComponentStatics
+namespace Rem::WidgetComponent
 {
-	WIDGETCOMPONENT_API
+	REMWIDGETCOMPONENT_API
 	void ForeachUserWidgetComponent(const UUserWidget* UserWidget,
 		TFunctionRef<void(UWidgetComponentBase** MemberPtr, int32 Index)> Predicate);
 
-	WIDGETCOMPONENT_API
+	REMWIDGETCOMPONENT_API
 	void ForeachUserWidgetComponent(const UWidgetComponentAsExtension* Extension,
 		TFunctionRef<void(UWidgetComponentBase** MemberPtr, int32 Index)> Predicate);
 
-	WIDGETCOMPONENT_API
+	REMWIDGETCOMPONENT_API
 	void AddComponentsToWidgetExtension(const UWidgetComponentAsExtension* Extension);
 	
-	WIDGETCOMPONENT_API
+	REMWIDGETCOMPONENT_API
 	void LinkSoftObjectToRuntimeVariable(const UWidgetComponentAsExtension* Extension);
 
-	WIDGETCOMPONENT_API
+	REMWIDGETCOMPONENT_API
 	UWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* UserWidget);
 	
 }

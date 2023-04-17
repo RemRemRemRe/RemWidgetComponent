@@ -4,4 +4,4 @@
 
 #include "Logging/LogMacros.h"
 
-WIDGETCOMPONENT_API DECLARE_LOG_CATEGORY_EXTERN(LogWidgetComponent, Log, All);
+REMWIDGETCOMPONENT_API DECLARE_LOG_CATEGORY_EXTERN(LogRemWidgetComponent, Log, All);

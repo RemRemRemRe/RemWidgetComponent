@@ -3,13 +3,13 @@
 #pragma once
 
 #include "Extensions/UserWidgetExtension.h"
-#include "WidgetComponentBase.generated.h"
+#include "RemWidgetComponentBase.generated.h"
 
 /**
  * Base class for a component of an UComponentBasedWidget ^^
  */
 UCLASS(Abstract, Blueprintable, BlueprintType, EditInlineNew, DefaultToInstanced)
-class WIDGETCOMPONENT_API UWidgetComponentBase : public UUserWidgetExtension
+class REMWIDGETCOMPONENT_API UWidgetComponentBase : public UUserWidgetExtension
 {
 	GENERATED_BODY()
 

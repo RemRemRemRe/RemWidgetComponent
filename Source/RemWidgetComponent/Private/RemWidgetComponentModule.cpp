@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "WidgetComponentModule.h"
+#include "RemWidgetComponentModule.h"
 
 class FWidgetComponentModule : public IWidgetComponentModule
 {
@@ -9,7 +9,7 @@ class FWidgetComponentModule : public IWidgetComponentModule
 	virtual void ShutdownModule() override;
 };
 
-IMPLEMENT_MODULE(FWidgetComponentModule, WidgetComponent)
+IMPLEMENT_MODULE(FWidgetComponentModule, RemWidgetComponent)
 
 void FWidgetComponentModule::StartupModule()
 {

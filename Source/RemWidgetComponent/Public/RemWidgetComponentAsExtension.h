@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "WidgetComponentBase.h"
-#include "WidgetComponentAsExtension.generated.h"
+#include "RemWidgetComponentBase.h"
+#include "RemWidgetComponentAsExtension.generated.h"
 
 /**
  * @brief Server as the bridge to hoop "component" into "UserWidgetExtension"
@@ -15,7 +15,7 @@
  *		@see FComponentBasedWidgetDetails::CustomizeDetails
  */
 UCLASS()
-class WIDGETCOMPONENT_API UWidgetComponentAsExtension : public UWidgetComponentBase
+class REMWIDGETCOMPONENT_API UWidgetComponentAsExtension : public UWidgetComponentBase
 {
 	GENERATED_BODY()
 
@@ -29,7 +29,7 @@ class WIDGETCOMPONENT_API UWidgetComponentAsExtension : public UWidgetComponentB
 public:
 	TFieldPath<FArrayProperty> GetComponentsFiledPath() const {	return ComponentsFiledPath; }
 	
-	void SetComponentsFiledPath(TFieldPath<FArrayProperty> InComponentsFiledPath);
+	void SetComponentsFiledPath(const TFieldPath<FArrayProperty>& InComponentsFiledPath);
 	
 	FArrayProperty* GetComponentsProperty() const;
 

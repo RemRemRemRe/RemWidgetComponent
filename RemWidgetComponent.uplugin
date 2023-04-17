@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "WidgetComponent",
+	"FriendlyName": "RemWidgetComponent",
 	"Description": "",
 	"Category": "UI",
 	"CreatedBy": "RemRemRemRe",
@@ -18,14 +18,14 @@
 	"BuiltInInitialFeatureState": "Active",
 	"Modules": [
 		{
-			"Name": "WidgetComponent",
+			"Name": "RemWidgetComponent",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
 		{
-			"Name": "Common",
+			"Name": "RemCommon",
 			"Enabled": true
 		}
 	]

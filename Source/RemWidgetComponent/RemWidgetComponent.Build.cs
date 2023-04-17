@@ -3,9 +3,9 @@
 
 namespace UnrealBuildTool.Rules
 {
-	public class WidgetComponent : ModuleRules
+	public class RemWidgetComponent : ModuleRules
 	{
-		public WidgetComponent(ReadOnlyTargetRules target) : base(target)
+		public RemWidgetComponent(ReadOnlyTargetRules target) : base(target)
 		{
 			PCHUsage					= PCHUsageMode.UseExplicitOrSharedPCHs;
 			bLegacyPublicIncludePaths	= false;
@@ -18,8 +18,10 @@ namespace UnrealBuildTool.Rules
 					"Core",
 					"CoreUObject",
 					"Engine",
+
 					"UMG",
-					"Common"
+					
+					"RemCommon",
 				}
 			);
 		}

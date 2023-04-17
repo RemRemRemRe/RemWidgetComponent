@@ -1,12 +1,12 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "WidgetComponentBase.h"
+#include "RemWidgetComponentBase.h"
 
-#include "Misc.h"
-#include "WidgetComponentStats.h"
-#include "Object/ObjectStatics.h"
-#include "WidgetComponentLog.h"
+#include "RemMisc.h"
+#include "RemWidgetComponentStats.h"
+#include "Object/RemObjectStatics.h"
+#include "RemWidgetComponentLog.h"
 
 #if WITH_EDITOR
 
@@ -44,7 +44,7 @@ void UWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupParams)
 	// then avoid doing the steps described above
 	// hopefully, someday , me or someone, could solve this problem ;)
 	{
-		auto IsReInstance = [] (const FString String)
+		auto IsReInstance = [] (const FString& String)
 		{
 			const FString Pattern = TEXT("REINST_");
 			return String.StartsWith(Pattern);
@@ -54,7 +54,7 @@ void UWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupParams)
 			IsReInstance(GetOuter()->GetName())
 			&& !IsReInstance(DupParams.DestClass->GetName()) && !IsReInstance(GetClass()->GetName());
 			bReInstanceOuterAndNoReInstanceClass && DupParams.DestName == GetFName()
-			&& !Common::IsClassDefaultObject(DupParams.DestOuter))
+			&& !Rem::Common::IsClassDefaultObject(DupParams.DestOuter))
 		{
 			UObject* Object = this;
 			do
@@ -62,7 +62,7 @@ void UWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupParams)
 				Object->Rename(nullptr, GetTransientPackage(),
 					REN_DoNotDirty | REN_DontCreateRedirectors | REN_ForceNoResetLoaders);
 
-				UE_LOG(LogWidgetComponent, Log, TEXT("Renaming object new name : %s, old name : %s path name : %s"),
+				UE_LOG(LogRemWidgetComponent, Log, TEXT("Renaming object new name : %s, old name : %s path name : %s"),
 					*Object->GetName(), *DupParams.DestName.ToString(), *Object->GetPathName());
 
 				Object->MarkAsGarbage();
@@ -117,7 +117,7 @@ void UWidgetComponentBase::InitializeComponent()
 {
 	bIsBlueprintObject = UObjectStatics::IsBlueprintObject(this);
 
-	using namespace Common::ObjectStatics;
+	using namespace Rem::Common::Object;
 	bImplementedReceiveBeginPlay	= bIsBlueprintObject && IsImplementedInBlueprint(
 		GetClass()->FindFunctionByName(GET_FUNCTION_NAME_CHECKED(UWidgetComponentBase, ReceiveBeginPlay)));
 

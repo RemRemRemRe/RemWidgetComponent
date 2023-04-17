@@ -1,11 +1,11 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ComponentBasedWidget.h"
+#include "RemComponentBasedWidget.h"
 
-#include "WidgetComponentAsExtension.h"
-#include "WidgetComponentStatics.h"
-#include "Macro/AssertionMacros.h"
+#include "RemWidgetComponentAsExtension.h"
+#include "RemWidgetComponentStatics.h"
+#include "Macro/RemAssertionMacros.h"
 
 TArray<UWidgetComponentBase*> UComponentBasedWidget::GetComponents() const
 {
@@ -26,12 +26,12 @@ FArrayProperty* UComponentBasedWidget::GetComponentsProperty() const
 
 bool UComponentBasedWidget::Initialize()
 {
-	if (UWidgetComponentAsExtension* Component = WidgetComponentStatics::GetOrAddWidgetComponentAsExtension(this);
+	if (UWidgetComponentAsExtension* Component = Rem::WidgetComponent::GetOrAddWidgetComponentAsExtension(this);
 		ensureAlways(Component))
 	{
 		Component->SetComponentsFiledPath(GetComponentsProperty());
 
-		WidgetComponentStatics::AddComponentsToWidgetExtension(Component);
+		Rem::WidgetComponent::AddComponentsToWidgetExtension(Component);
 	}
 
 	return Super::Initialize();
@@ -44,7 +44,7 @@ void UComponentBasedWidget::PostCDOCompiled(const FPostCDOCompiledContext& Conte
 	Super::PostCDOCompiled(Context);
 
 	// CDO will not run Initialize, so add the component here
-	UWidgetComponentAsExtension* Extension = WidgetComponentStatics::GetOrAddWidgetComponentAsExtension(this);;
+	UWidgetComponentAsExtension* Extension = Rem::WidgetComponent::GetOrAddWidgetComponentAsExtension(this);;
 	CheckPointer(Extension, return);
 
 	Extension->SetFlags(RF_Transient);

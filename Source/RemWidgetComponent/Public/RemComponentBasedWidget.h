@@ -2,16 +2,16 @@
 
 #pragma once
 
-#include "WidgetComponentBase.h"
+#include "RemWidgetComponentBase.h"
 #include "UMG/Public/Blueprint/UserWidget.h"
-#include "ComponentBasedWidget.generated.h"
+#include "RemComponentBasedWidget.generated.h"
 
 
 /**
  * A widget who will have many components ^^
  */
 UCLASS()
-class WIDGETCOMPONENT_API UComponentBasedWidget : public UUserWidget
+class REMWIDGETCOMPONENT_API UComponentBasedWidget : public UUserWidget
 {
 	GENERATED_BODY()
 

@@ -1,18 +1,17 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "WidgetComponentStatics.h"
+#include "RemWidgetComponentStatics.h"
 
-#include "WidgetComponentAsExtension.h"
-#include "WidgetComponentBase.h"
-#include "WidgetComponentLog.h"
+#include "RemWidgetComponentAsExtension.h"
+#include "RemWidgetComponentBase.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetTree.h"
-#include "Macro/AssertionMacros.h"
-#include "Templates/PropertyHelper.h"
-#include "Object/ObjectStatics.h"
+#include "Macro/RemAssertionMacros.h"
+#include "Templates/RemPropertyHelper.h"
+#include "Object/RemObjectStatics.h"
 
-namespace WidgetComponentStatics
+namespace Rem::WidgetComponent
 {
 void ForeachUserWidgetComponent(const UUserWidget* UserWidget,
 	const TFunctionRef<void(UWidgetComponentBase** MemberPtr, int32 Index)> Predicate)
@@ -21,17 +20,17 @@ void ForeachUserWidgetComponent(const UUserWidget* UserWidget,
 	ForeachUserWidgetComponent(UserWidget->GetExtension<UWidgetComponentAsExtension>(), Predicate);
 }
 
-void WidgetComponentStatics::ForeachUserWidgetComponent(const UWidgetComponentAsExtension* Extension,
+void ForeachUserWidgetComponent(const UWidgetComponentAsExtension* Extension,
 	const TFunctionRef<void(UWidgetComponentBase** MemberPtr, int32 Index)> Predicate)
 {
 	CheckPointer(Extension, return;);
 	
 	const FArrayProperty* ComponentsProperty = Extension->GetComponentsProperty();
 
-	CheckCondition(Common::PropertyHelper::IsPropertyClassChildOf(ComponentsProperty->Inner,
+	CheckCondition(Rem::Common::PropertyHelper::IsPropertyClassChildOf(ComponentsProperty->Inner,
 		UWidgetComponentBase::StaticClass()), return;);
 
-	Common::ObjectStatics::ForeachObjectInArray(ComponentsProperty, Extension->GetOuterUUserWidget(),
+	Rem::Common::Object::ForeachObjectInArray(ComponentsProperty, Extension->GetOuterUUserWidget(),
 		[&] (void* ObjectMemberPtr, const int32 Index)
 	{
 		UWidgetComponentBase** MemberPtr = static_cast<UWidgetComponentBase**>(ObjectMemberPtr);
@@ -62,7 +61,7 @@ void AddComponentsToWidgetExtension(const UWidgetComponentAsExtension* Extension
 	});
 }
 
-void WidgetComponentStatics::LinkSoftObjectToRuntimeVariable(const UWidgetComponentAsExtension* Extension)
+void LinkSoftObjectToRuntimeVariable(const UWidgetComponentAsExtension* Extension)
 {
 	CheckPointer(Extension, return;);
 
@@ -88,7 +87,7 @@ void WidgetComponentStatics::LinkSoftObjectToRuntimeVariable(const UWidgetCompon
 		const UWidgetComponentBase* Component = *ObjectMemberPtr;
 		CheckPointer(Component, return);
 		
-		Common::PropertyHelper::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), Component,
+		Rem::Common::PropertyHelper::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), Component,
 		[&] (const FProperty* InProperty, const void* InContainer, int32,
 		const FString&, const FString&, const FString&, int32, int32)
 		{
@@ -103,7 +102,7 @@ void WidgetComponentStatics::LinkSoftObjectToRuntimeVariable(const UWidgetCompon
 				return;
 			}
 			
-			if (UWidget** Value = NamedWidgetMap.Find(*Common::GetObjectNameFromSoftObjectPath(SoftObjectPtr->ToSoftObjectPath())))
+			if (UWidget** Value = NamedWidgetMap.Find(*Rem::Common::GetObjectNameFromSoftObjectPath(SoftObjectPtr->ToSoftObjectPath())))
 			{
 				// link SoftObjectPtr to the runtime variable
 				*SoftObjectPtr = *Value;
@@ -131,4 +130,3 @@ UWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* Use
 }
 	
 }
-	

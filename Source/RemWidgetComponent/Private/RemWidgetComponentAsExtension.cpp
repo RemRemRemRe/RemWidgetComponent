@@ -1,13 +1,13 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "WidgetComponentAsExtension.h"
+#include "RemWidgetComponentAsExtension.h"
 
-#include "WidgetComponentStatics.h"
+#include "RemWidgetComponentStatics.h"
 #include "Blueprint/UserWidget.h"
-#include "Macro/AssertionMacros.h"
+#include "Macro/RemAssertionMacros.h"
 
-void UWidgetComponentAsExtension::SetComponentsFiledPath(const TFieldPath<FArrayProperty> InComponentsFiledPath)
+void UWidgetComponentAsExtension::SetComponentsFiledPath(const TFieldPath<FArrayProperty>& InComponentsFiledPath)
 {
 	ComponentsFiledPath = InComponentsFiledPath;
 }
@@ -23,7 +23,7 @@ void UWidgetComponentAsExtension::Initialize()
 {
 	Super::Initialize();
 
-	WidgetComponentStatics::LinkSoftObjectToRuntimeVariable(this);
+	Rem::WidgetComponent::LinkSoftObjectToRuntimeVariable(this);
 }
 
 bool UWidgetComponentAsExtension::RequiresTick() const
