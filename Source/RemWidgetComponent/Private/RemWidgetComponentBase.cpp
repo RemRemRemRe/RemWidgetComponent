@@ -15,7 +15,7 @@ static FAutoConsoleVariable CVarWidgetComponentBaseFixCompileCrash(TEXT("WidgetC
 
 #endif
 
-void UWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupParams)
+void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupParams)
 {
 	Super::PreDuplicate(DupParams);
 
@@ -77,7 +77,7 @@ void UWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupParams)
 
 }
 
-void UWidgetComponentBase::Initialize()
+void URemWidgetComponentBase::Initialize()
 {
 	Super::Initialize();
 
@@ -85,7 +85,7 @@ void UWidgetComponentBase::Initialize()
 	BeginPlay();
 }
 
-void UWidgetComponentBase::Destruct()
+void URemWidgetComponentBase::Destruct()
 {
 	EndPlay();
 	UninitializeComponent();
@@ -93,7 +93,7 @@ void UWidgetComponentBase::Destruct()
 	Super::Destruct();
 }
 
-bool UWidgetComponentBase::RequiresTick() const
+bool URemWidgetComponentBase::RequiresTick() const
 {
 	if (bImplementedRequiresTick)
 	{
@@ -103,7 +103,7 @@ bool UWidgetComponentBase::RequiresTick() const
 	return Super::RequiresTick();
 }
 
-void UWidgetComponentBase::Tick(const FGeometry& MyGeometry, const float InDeltaTime)
+void URemWidgetComponentBase::Tick(const FGeometry& MyGeometry, const float InDeltaTime)
 {
 	Super::Tick(MyGeometry, InDeltaTime);
 	
@@ -113,22 +113,22 @@ void UWidgetComponentBase::Tick(const FGeometry& MyGeometry, const float InDelta
 	}
 }
 
-void UWidgetComponentBase::InitializeComponent()
+void URemWidgetComponentBase::InitializeComponent()
 {
-	bIsBlueprintObject = UObjectStatics::IsBlueprintObject(this);
+	bIsBlueprintObject = URemObjectStatics::IsBlueprintObject(this);
 
 	using namespace Rem::Common::Object;
 	bImplementedReceiveBeginPlay	= bIsBlueprintObject && IsImplementedInBlueprint(
-		GetClass()->FindFunctionByName(GET_FUNCTION_NAME_CHECKED(UWidgetComponentBase, ReceiveBeginPlay)));
+		GetClass()->FindFunctionByName(GET_FUNCTION_NAME_CHECKED(URemWidgetComponentBase, ReceiveBeginPlay)));
 
 	bImplementedReceiveEndPlay		= bIsBlueprintObject && IsImplementedInBlueprint(
-		GetClass()->FindFunctionByName(GET_FUNCTION_NAME_CHECKED(UWidgetComponentBase, ReceiveEndPlay)));
+		GetClass()->FindFunctionByName(GET_FUNCTION_NAME_CHECKED(URemWidgetComponentBase, ReceiveEndPlay)));
 
 	bImplementedRequiresTick		= bIsBlueprintObject && IsImplementedInBlueprint(
-		GetClass()->FindFunctionByName(GET_FUNCTION_NAME_CHECKED(UWidgetComponentBase, BP_RequiresTick)));
+		GetClass()->FindFunctionByName(GET_FUNCTION_NAME_CHECKED(URemWidgetComponentBase, BP_RequiresTick)));
 }
 
-void UWidgetComponentBase::BeginPlay()
+void URemWidgetComponentBase::BeginPlay()
 {
 	if (bImplementedReceiveBeginPlay)
 	{
@@ -136,7 +136,7 @@ void UWidgetComponentBase::BeginPlay()
 	}
 }
 
-void UWidgetComponentBase::EndPlay()
+void URemWidgetComponentBase::EndPlay()
 {
 	if (bImplementedReceiveEndPlay)
 	{
@@ -144,11 +144,11 @@ void UWidgetComponentBase::EndPlay()
 	}
 }
 
-void UWidgetComponentBase::UninitializeComponent()
+void URemWidgetComponentBase::UninitializeComponent()
 {
 }
 
-TStatId UWidgetComponentBase::GetStatId() const
+TStatId URemWidgetComponentBase::GetStatId() const
 {
 	return GET_STATID(STAT_WidgetComponent);
 }

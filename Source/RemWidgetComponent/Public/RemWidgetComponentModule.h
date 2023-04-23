@@ -8,7 +8,7 @@
 /**
  * The public interface to this module
  */
-class IWidgetComponentModule : public IModuleInterface
+class IRemWidgetComponentModule : public IModuleInterface
 {
 
 public:
@@ -19,9 +19,9 @@ public:
 	 *
 	 * @return Returns singleton instance, loading the module on demand if needed
 	 */
-	static IWidgetComponentModule& Get()
+	static IRemWidgetComponentModule& Get()
 	{
-		return FModuleManager::LoadModuleChecked< IWidgetComponentModule >( "WidgetComponent" );
+		return FModuleManager::LoadModuleChecked< IRemWidgetComponentModule >( "RemWidgetComponent" );
 	}
 
 	/**
@@ -31,7 +31,7 @@ public:
 	 */
 	static bool IsAvailable()
 	{
-		return FModuleManager::Get().IsModuleLoaded( "WidgetComponent" );
+		return FModuleManager::Get().IsModuleLoaded( "RemWidgetComponent" );
 	}
 	
 };

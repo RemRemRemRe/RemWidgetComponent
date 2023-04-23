@@ -5,14 +5,14 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "RemWidgetComponentStatics.generated.h"
 
-class UWidgetComponentBase;
-class UWidgetComponentAsExtension;
+class URemWidgetComponentBase;
+class URemWidgetComponentAsExtension;
 
 /**
  * 
  */
 UCLASS()
-class REMWIDGETCOMPONENT_API UWidgetComponentStatics : public UBlueprintFunctionLibrary
+class REMWIDGETCOMPONENT_API URemWidgetComponentStatics : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
@@ -23,19 +23,19 @@ namespace Rem::WidgetComponent
 {
 	REMWIDGETCOMPONENT_API
 	void ForeachUserWidgetComponent(const UUserWidget* UserWidget,
-		TFunctionRef<void(UWidgetComponentBase** MemberPtr, int32 Index)> Predicate);
+		TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)> Predicate);
 
 	REMWIDGETCOMPONENT_API
-	void ForeachUserWidgetComponent(const UWidgetComponentAsExtension* Extension,
-		TFunctionRef<void(UWidgetComponentBase** MemberPtr, int32 Index)> Predicate);
+	void ForeachUserWidgetComponent(const URemWidgetComponentAsExtension* Extension,
+		TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)> Predicate);
 
 	REMWIDGETCOMPONENT_API
-	void AddComponentsToWidgetExtension(const UWidgetComponentAsExtension* Extension);
+	void AddComponentsToWidgetExtension(const URemWidgetComponentAsExtension* Extension);
 	
 	REMWIDGETCOMPONENT_API
-	void LinkSoftObjectToRuntimeVariable(const UWidgetComponentAsExtension* Extension);
+	void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Extension);
 
 	REMWIDGETCOMPONENT_API
-	UWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* UserWidget);
+	URemWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* UserWidget);
 	
 }

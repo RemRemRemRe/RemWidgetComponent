@@ -15,7 +15,7 @@
  *		@see FComponentBasedWidgetDetails::CustomizeDetails
  */
 UCLASS()
-class REMWIDGETCOMPONENT_API UWidgetComponentAsExtension : public UWidgetComponentBase
+class REMWIDGETCOMPONENT_API URemWidgetComponentAsExtension : public URemWidgetComponentBase
 {
 	GENERATED_BODY()
 

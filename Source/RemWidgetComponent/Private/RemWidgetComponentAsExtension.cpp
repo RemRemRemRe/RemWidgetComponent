@@ -7,26 +7,26 @@
 #include "Blueprint/UserWidget.h"
 #include "Macro/RemAssertionMacros.h"
 
-void UWidgetComponentAsExtension::SetComponentsFiledPath(const TFieldPath<FArrayProperty>& InComponentsFiledPath)
+void URemWidgetComponentAsExtension::SetComponentsFiledPath(const TFieldPath<FArrayProperty>& InComponentsFiledPath)
 {
 	ComponentsFiledPath = InComponentsFiledPath;
 }
 
-FArrayProperty* UWidgetComponentAsExtension::GetComponentsProperty() const
+FArrayProperty* URemWidgetComponentAsExtension::GetComponentsProperty() const
 {
-	CheckPointer(GetUserWidget(), return {});
+	RemCheckVariable(GetUserWidget(), return {});
 	
 	return GetComponentsFiledPath().Get(GetUserWidget()->StaticClass());
 }
 
-void UWidgetComponentAsExtension::Initialize()
+void URemWidgetComponentAsExtension::Initialize()
 {
 	Super::Initialize();
 
 	Rem::WidgetComponent::LinkSoftObjectToRuntimeVariable(this);
 }
 
-bool UWidgetComponentAsExtension::RequiresTick() const
+bool URemWidgetComponentAsExtension::RequiresTick() const
 {
 	return false;
 }

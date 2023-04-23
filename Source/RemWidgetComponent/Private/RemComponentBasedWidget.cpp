@@ -7,26 +7,26 @@
 #include "RemWidgetComponentStatics.h"
 #include "Macro/RemAssertionMacros.h"
 
-TArray<UWidgetComponentBase*> UComponentBasedWidget::GetComponents() const
+TArray<URemWidgetComponentBase*> URemComponentBasedWidget::GetComponents() const
 {
 	return Components;
 }
 
-TArray<TObjectPtr<UWidgetComponentBase>> UComponentBasedWidget::GetComponentsObjectPtr() const
+TArray<TObjectPtr<URemWidgetComponentBase>> URemComponentBasedWidget::GetComponentsObjectPtr() const
 {
 	return Components;
 }
 
-FArrayProperty* UComponentBasedWidget::GetComponentsProperty() const
+FArrayProperty* URemComponentBasedWidget::GetComponentsProperty() const
 {
 	static FArrayProperty* Prop = FindFieldChecked<FArrayProperty>(GetClass(),
-		GET_MEMBER_NAME_CHECKED(UComponentBasedWidget, Components));
+		GET_MEMBER_NAME_CHECKED(URemComponentBasedWidget, Components));
 	return Prop;
 }
 
-bool UComponentBasedWidget::Initialize()
+bool URemComponentBasedWidget::Initialize()
 {
-	if (UWidgetComponentAsExtension* Component = Rem::WidgetComponent::GetOrAddWidgetComponentAsExtension(this);
+	if (URemWidgetComponentAsExtension* Component = Rem::WidgetComponent::GetOrAddWidgetComponentAsExtension(this);
 		ensureAlways(Component))
 	{
 		Component->SetComponentsFiledPath(GetComponentsProperty());
@@ -39,13 +39,13 @@ bool UComponentBasedWidget::Initialize()
 
 #if WITH_EDITOR
 
-void UComponentBasedWidget::PostCDOCompiled(const FPostCDOCompiledContext& Context)
+void URemComponentBasedWidget::PostCDOCompiled(const FPostCDOCompiledContext& Context)
 {
 	Super::PostCDOCompiled(Context);
 
 	// CDO will not run Initialize, so add the component here
-	UWidgetComponentAsExtension* Extension = Rem::WidgetComponent::GetOrAddWidgetComponentAsExtension(this);;
-	CheckPointer(Extension, return);
+	URemWidgetComponentAsExtension* Extension = Rem::WidgetComponent::GetOrAddWidgetComponentAsExtension(this);;
+	RemCheckVariable(Extension, return);
 
 	Extension->SetFlags(RF_Transient);
 

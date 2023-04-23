@@ -11,24 +11,24 @@
  * A widget who will have many components ^^
  */
 UCLASS()
-class REMWIDGETCOMPONENT_API UComponentBasedWidget : public UUserWidget
+class REMWIDGETCOMPONENT_API URemComponentBasedWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
 #pragma region Data Members
 
-	UPROPERTY(EditAnywhere, Instanced, BlueprintGetter = GetComponents, Category = Component)
-	TArray<TObjectPtr<UWidgetComponentBase>> Components;
+	UPROPERTY(EditAnywhere, Instanced, BlueprintGetter = GetComponents, Category = "Rem|Component")
+	TArray<TObjectPtr<URemWidgetComponentBase>> Components;
 
 #pragma endregion Data Members
 
 #pragma region Members Accessors
 
 public:
-	UFUNCTION(BlueprintCallable, Category = Component)
-	TArray<UWidgetComponentBase*> GetComponents() const;
+	UFUNCTION(BlueprintCallable, Category = "Rem|Component")
+	TArray<URemWidgetComponentBase*> GetComponents() const;
 
-	TArray<TObjectPtr<UWidgetComponentBase>> GetComponentsObjectPtr() const;
+	TArray<TObjectPtr<URemWidgetComponentBase>> GetComponentsObjectPtr() const;
 
 	FArrayProperty* GetComponentsProperty() const;
 

@@ -6,10 +6,10 @@
 #include "RemWidgetComponentBase.generated.h"
 
 /**
- * Base class for a component of an UComponentBasedWidget ^^
+ * Base class for a component of an URemComponentBasedWidget ^^
  */
 UCLASS(Abstract, Blueprintable, BlueprintType, EditInlineNew, DefaultToInstanced)
-class REMWIDGETCOMPONENT_API UWidgetComponentBase : public UUserWidgetExtension
+class REMWIDGETCOMPONENT_API URemWidgetComponentBase : public UUserWidgetExtension
 {
 	GENERATED_BODY()
 
