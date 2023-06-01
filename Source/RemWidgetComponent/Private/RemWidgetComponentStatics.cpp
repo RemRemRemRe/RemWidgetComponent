@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "RemWidgetComponentStatics.h"
@@ -10,6 +10,8 @@
 #include "Macro/RemAssertionMacros.h"
 #include "Templates/RemPropertyHelper.h"
 #include "Object/RemObjectStatics.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(RemWidgetComponentStatics)
 
 namespace Rem::WidgetComponent
 {
@@ -130,3 +132,4 @@ URemWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* 
 }
 	
 }
+

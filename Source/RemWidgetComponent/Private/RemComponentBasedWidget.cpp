@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "RemComponentBasedWidget.h"
@@ -6,6 +6,8 @@
 #include "RemWidgetComponentAsExtension.h"
 #include "RemWidgetComponentStatics.h"
 #include "Macro/RemAssertionMacros.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(RemComponentBasedWidget)
 
 TArray<URemWidgetComponentBase*> URemComponentBasedWidget::GetComponents() const
 {
@@ -53,3 +55,4 @@ void URemComponentBasedWidget::PostCDOCompiled(const FPostCDOCompiledContext& Co
 }
 
 #endif
+

@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "RemWidgetComponentBase.h"
@@ -7,6 +7,8 @@
 #include "RemWidgetComponentStats.h"
 #include "Object/RemObjectStatics.h"
 #include "RemWidgetComponentLog.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(RemWidgetComponentBase)
 
 #if WITH_EDITOR
 
@@ -152,3 +154,4 @@ TStatId URemWidgetComponentBase::GetStatId() const
 {
 	return GET_STATID(STAT_WidgetComponent);
 }
+
