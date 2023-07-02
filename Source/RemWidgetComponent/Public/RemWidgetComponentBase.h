@@ -27,6 +27,8 @@ public:
 #pragma region Object
 
 	virtual void PreDuplicate(FObjectDuplicationParameters& DupParams) override;
+	
+	virtual UWorld* GetWorld() const override;
 
 #pragma endregion Object
 
@@ -54,7 +56,7 @@ public:
 	 * Blueprint implementable event for when the component is beginning play
 	 * Called when the owning widget initialize or when the component is created if the widget has initialized.
 	 */
-	UFUNCTION(BlueprintImplementableEvent, meta=(DisplayName = "Begin Play"))
+	UFUNCTION(BlueprintImplementableEvent, DisplayName = "Begin Play")
 	void ReceiveBeginPlay();
 
 	/**
@@ -64,7 +66,7 @@ public:
 	virtual void EndPlay();
 
 	/** Blueprint implementable event for when the component ends play */
-	UFUNCTION(BlueprintImplementableEvent, meta=(Keywords = "delete", DisplayName = "End Play"))
+	UFUNCTION(BlueprintImplementableEvent, DisplayName = "End Play")
 	void ReceiveEndPlay();
 	
 	/**
@@ -75,10 +77,13 @@ public:
 	virtual TStatId GetStatId() const;
 
 	/** Blueprint implementable event decide whether the component requires tick. */
-	UFUNCTION(BlueprintImplementableEvent, meta=(DisplayName = "RequiresTick"))
+	UFUNCTION(BlueprintImplementableEvent, DisplayName = "RequiresTick")
 	bool BP_RequiresTick() const;
 	
 	/** Event called every frame if tick is enabled */
-	UFUNCTION(BlueprintImplementableEvent, meta=(DisplayName = "Tick"))
+	UFUNCTION(BlueprintImplementableEvent, DisplayName = "Tick")
 	void ReceiveTick(float DeltaSeconds);
+
+	UFUNCTION(BlueprintCallable, DisplayName = "GetUserWidget", meta = (DeterminesOutputType = "Class"))
+	UUserWidget* BP_GetUserWidget(TSubclassOf<UUserWidget> Class) const;
 };

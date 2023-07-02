@@ -22,6 +22,15 @@ class REMWIDGETCOMPONENT_API URemComponentBasedWidget : public UUserWidget
 
 #pragma endregion Data Members
 
+public:
+	virtual bool Initialize() override;
+
+#if WITH_EDITOR
+
+	virtual void PostCDOCompiled(const FPostCDOCompiledContext& Context) override;
+
+#endif
+	
 #pragma region Members Accessors
 
 public:
@@ -33,14 +42,4 @@ public:
 	FArrayProperty* GetComponentsProperty() const;
 
 #pragma endregion Members Accessors
-
-public:
-	virtual bool Initialize() override;
-
-#if WITH_EDITOR
-
-	virtual void PostCDOCompiled(const FPostCDOCompiledContext& Context) override;
-
-#endif
-
 };

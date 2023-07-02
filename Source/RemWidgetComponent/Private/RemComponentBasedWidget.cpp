@@ -9,23 +9,6 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(RemComponentBasedWidget)
 
-TArray<URemWidgetComponentBase*> URemComponentBasedWidget::GetComponents() const
-{
-	return Components;
-}
-
-TArray<TObjectPtr<URemWidgetComponentBase>> URemComponentBasedWidget::GetComponentsObjectPtr() const
-{
-	return Components;
-}
-
-FArrayProperty* URemComponentBasedWidget::GetComponentsProperty() const
-{
-	static FArrayProperty* Prop = FindFieldChecked<FArrayProperty>(GetClass(),
-		GET_MEMBER_NAME_CHECKED(URemComponentBasedWidget, Components));
-	return Prop;
-}
-
 bool URemComponentBasedWidget::Initialize()
 {
 	if (URemWidgetComponentAsExtension* Component = Rem::WidgetComponent::GetOrAddWidgetComponentAsExtension(this);
@@ -49,10 +32,24 @@ void URemComponentBasedWidget::PostCDOCompiled(const FPostCDOCompiledContext& Co
 	URemWidgetComponentAsExtension* Extension = Rem::WidgetComponent::GetOrAddWidgetComponentAsExtension(this);;
 	RemCheckVariable(Extension, return);
 
-	Extension->SetFlags(RF_Transient);
-
 	Extension->SetComponentsFiledPath(GetComponentsProperty());
 }
 
 #endif
 
+TArray<URemWidgetComponentBase*> URemComponentBasedWidget::GetComponents() const
+{
+	return Components;
+}
+
+TArray<TObjectPtr<URemWidgetComponentBase>> URemComponentBasedWidget::GetComponentsObjectPtr() const
+{
+	return Components;
+}
+
+FArrayProperty* URemComponentBasedWidget::GetComponentsProperty() const
+{
+	static FArrayProperty* Prop = FindFieldChecked<FArrayProperty>(GetClass(),
+		GET_MEMBER_NAME_CHECKED(URemComponentBasedWidget, Components));
+	return Prop;
+}

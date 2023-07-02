@@ -14,7 +14,7 @@
  * 2. provide information about which member to detail customize
  *		@see FComponentBasedWidgetDetails::CustomizeDetails
  */
-UCLASS()
+UCLASS(HideDropdown)
 class REMWIDGETCOMPONENT_API URemWidgetComponentAsExtension : public URemWidgetComponentBase
 {
 	GENERATED_BODY()

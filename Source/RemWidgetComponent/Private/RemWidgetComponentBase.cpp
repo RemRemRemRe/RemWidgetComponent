@@ -79,6 +79,21 @@ void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupPara
 
 }
 
+UWorld* URemWidgetComponentBase::GetWorld() const
+{
+	if (Rem::Common::Object::IsClassDefaultObject(*this))
+	{
+		return nullptr;
+	}
+	
+	if (GetUserWidget())
+	{
+		return GetUserWidget()->GetWorld();
+	}
+
+	return nullptr;
+}
+
 void URemWidgetComponentBase::Initialize()
 {
 	Super::Initialize();
@@ -155,3 +170,7 @@ TStatId URemWidgetComponentBase::GetStatId() const
 	return GET_STATID(STAT_WidgetComponent);
 }
 
+UUserWidget* URemWidgetComponentBase::BP_GetUserWidget(TSubclassOf<UUserWidget>) const
+{
+	return GetUserWidget();
+}
