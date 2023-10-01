@@ -9,7 +9,9 @@
 #include "Blueprint/WidgetTree.h"
 #include "Macro/RemAssertionMacros.h"
 #include "Templates/RemPropertyHelper.h"
+#include "Templates/RemIteratePropertiesOfType.h"
 #include "Object/RemObjectStatics.h"
+#include "InstancedStruct.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(RemWidgetComponentStatics)
 
@@ -88,8 +90,8 @@ void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Exten
 	{
 		const URemWidgetComponentBase* Component = *ObjectMemberPtr;
 		RemCheckVariable(Component, return);
-		
-		Rem::Common::PropertyHelper::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), Component,
+
+		Common::PropertyHelper::IteratePropertiesOfType<FSoftObjectProperty, FInstancedStruct>(Component->GetClass(), Component,
 		[&] (const FProperty* InProperty, const void* InContainer, int32,
 		const FString&, const FString&, const FString&, int32, int32)
 		{
@@ -132,4 +134,3 @@ URemWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* 
 }
 	
 }
-

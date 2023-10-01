@@ -3,7 +3,7 @@
 #pragma once
 
 #include "RemWidgetComponentBase.h"
-#include "UMG/Public/Blueprint/UserWidget.h"
+#include "Blueprint/UserWidget.h"
 #include "RemComponentBasedWidget.generated.h"
 
 
@@ -17,7 +17,7 @@ class REMWIDGETCOMPONENT_API URemComponentBasedWidget : public UUserWidget
 
 #pragma region Data Members
 
-	UPROPERTY(EditAnywhere, Instanced, BlueprintGetter = GetComponents, Category = "Rem|Component")
+	UPROPERTY(EditAnywhere, Instanced, BlueprintGetter = GetComponents, Category = "Component")
 	TArray<TObjectPtr<URemWidgetComponentBase>> Components;
 
 #pragma endregion Data Members
