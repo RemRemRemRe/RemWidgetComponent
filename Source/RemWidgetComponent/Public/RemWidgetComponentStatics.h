@@ -8,9 +8,7 @@
 class URemWidgetComponentBase;
 class URemWidgetComponentAsExtension;
 
-/**
- * 
- */
+
 UCLASS()
 class REMWIDGETCOMPONENT_API URemWidgetComponentStatics : public UBlueprintFunctionLibrary
 {

@@ -56,7 +56,7 @@ void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupPara
 			IsReInstance(GetOuter()->GetName())
 			&& !IsReInstance(DupParams.DestClass->GetName()) && !IsReInstance(GetClass()->GetName());
 			bReInstanceOuterAndNoReInstanceClass && DupParams.DestName == GetFName()
-			&& !Rem::Common::IsClassDefaultObject(DupParams.DestOuter))
+			&& !Rem::IsClassDefaultObject(DupParams.DestOuter))
 		{
 			UObject* Object = this;
 			do
@@ -81,7 +81,7 @@ void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupPara
 
 UWorld* URemWidgetComponentBase::GetWorld() const
 {
-	if (Rem::Common::Object::IsClassDefaultObject(*this))
+	if (Rem::Object::IsClassDefaultObject(*this))
 	{
 		return nullptr;
 	}
@@ -134,7 +134,7 @@ void URemWidgetComponentBase::InitializeComponent()
 {
 	bIsBlueprintObject = URemObjectStatics::IsBlueprintObject(this);
 
-	using namespace Rem::Common::Object;
+	using namespace Rem::Object;
 	bImplementedReceiveBeginPlay	= bIsBlueprintObject && IsImplementedInBlueprint(
 		GetClass()->FindFunctionByName(GET_FUNCTION_NAME_CHECKED(URemWidgetComponentBase, ReceiveBeginPlay)));
 

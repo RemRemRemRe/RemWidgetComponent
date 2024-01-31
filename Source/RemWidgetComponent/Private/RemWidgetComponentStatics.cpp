@@ -31,10 +31,10 @@ void ForeachUserWidgetComponent(const URemWidgetComponentAsExtension* Extension,
 	
 	const FArrayProperty* ComponentsProperty = Extension->GetComponentsProperty();
 
-	RemCheckCondition(Rem::Common::PropertyHelper::IsPropertyClassChildOf(ComponentsProperty->Inner,
+	RemCheckCondition(Rem::Property::IsPropertyClassChildOf(ComponentsProperty->Inner,
 		URemWidgetComponentBase::StaticClass()), return;);
 
-	Rem::Common::Object::ForeachObjectInArray(ComponentsProperty, Extension->GetOuterUUserWidget(),
+	Object::ForeachObjectInArray(ComponentsProperty, Extension->GetOuterUUserWidget(),
 		[&] (void* ObjectMemberPtr, const int32 Index)
 	{
 		URemWidgetComponentBase** MemberPtr = static_cast<URemWidgetComponentBase**>(ObjectMemberPtr);
@@ -91,14 +91,13 @@ void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Exten
 		const URemWidgetComponentBase* Component = *ObjectMemberPtr;
 		RemCheckVariable(Component, return);
 
-		Common::PropertyHelper::IteratePropertiesOfType<FSoftObjectProperty, FInstancedStruct>(Component->GetClass(), Component,
-		[&] (const FProperty* InProperty, const void* InContainer, int32,
-		const FString&, const FString&, const FString&, int32, int32)
+		Property::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), Component,
+		[&] (const FProperty* InProperty, const void* InContainer)
 		{
-			const FSoftObjectProperty* SoftObjectProperty = CastField<FSoftObjectProperty>(const_cast<FProperty*>(InProperty));
+			auto* SoftObjectProperty = CastField<const FSoftObjectProperty>(InProperty);
 			RemCheckVariable(SoftObjectProperty, return);
 			
-			FSoftObjectPtr* SoftObjectPtr = SoftObjectProperty->GetPropertyValuePtr_InContainer(const_cast<void*>(InContainer));
+			auto* SoftObjectPtr = SoftObjectProperty->GetPropertyValuePtr_InContainer(const_cast<void*>(InContainer));
 			RemCheckVariable(SoftObjectPtr, return);
 
 			if (SoftObjectPtr->IsNull())
@@ -106,7 +105,7 @@ void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Exten
 				return;
 			}
 			
-			if (UWidget** Value = NamedWidgetMap.Find(*Rem::Common::GetObjectNameFromSoftObjectPath(SoftObjectPtr->ToSoftObjectPath())))
+			if (UWidget** Value = NamedWidgetMap.Find(*GetObjectNameFromSoftObjectPath(SoftObjectPtr->ToSoftObjectPath())))
 			{
 				// link SoftObjectPtr to the runtime variable
 				*SoftObjectPtr = *Value;
