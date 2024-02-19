@@ -7,6 +7,8 @@
 #include "RemWidgetComponentStats.h"
 #include "Object/RemObjectStatics.h"
 #include "RemWidgetComponentLog.h"
+#include "Blueprint/UserWidget.h"
+#include "Macro/RemLogMacros.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(RemWidgetComponentBase)
 
@@ -64,7 +66,7 @@ void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupPara
 				Object->Rename(nullptr, GetTransientPackage(),
 					REN_DoNotDirty | REN_DontCreateRedirectors | REN_ForceNoResetLoaders);
 
-				UE_LOG(LogRemWidgetComponent, Log, TEXT("Renaming object new name : %s, old name : %s path name : %s"),
+				REM_LOG_FUNCTION(LogRemWidgetComponent, Log, TEXT("Renaming object new name : %s, old name : %s path name : %s"),
 					*Object->GetName(), *DupParams.DestName.ToString(), *Object->GetPathName());
 
 				Object->MarkAsGarbage();
