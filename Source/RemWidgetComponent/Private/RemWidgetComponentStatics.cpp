@@ -11,7 +11,7 @@
 #include "Templates/RemPropertyHelper.h"
 #include "Templates/RemIteratePropertiesOfType.h"
 #include "Object/RemObjectStatics.h"
-#include "InstancedStruct.h"
+#include "StructUtils/InstancedStruct.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(RemWidgetComponentStatics)
 
@@ -28,7 +28,7 @@ void ForeachUserWidgetComponent(const URemWidgetComponentAsExtension* Extension,
 	const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)> Predicate)
 {
 	RemCheckVariable(Extension, return;);
-	
+
 	const FArrayProperty* ComponentsProperty = Extension->GetComponentsProperty();
 
 	RemCheckCondition(Rem::Property::IsPropertyClassChildOf(ComponentsProperty->Inner,
@@ -54,13 +54,13 @@ void AddComponentsToWidgetExtension(const URemWidgetComponentAsExtension* Extens
 	{
 		return;
 	}
-	
+
 	ForeachUserWidgetComponent(Extension,
 	[&](URemWidgetComponentBase** ObjectMemberPtr, int32)
 	{
 		URemWidgetComponentBase* ComponentBase = *ObjectMemberPtr;
 		RemCheckVariable(ComponentBase, return);
-		
+
 		UserWidget->AddExtension(ComponentBase);
 	});
 }
@@ -96,7 +96,7 @@ void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Exten
 		{
 			auto* SoftObjectProperty = CastField<const FSoftObjectProperty>(InProperty);
 			RemCheckVariable(SoftObjectProperty, return);
-			
+
 			auto* SoftObjectPtr = SoftObjectProperty->GetPropertyValuePtr_InContainer(const_cast<void*>(InContainer));
 			RemCheckVariable(SoftObjectPtr, return);
 
@@ -104,7 +104,7 @@ void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Exten
 			{
 				return;
 			}
-			
+
 			if (UWidget** Value = NamedWidgetMap.Find(*GetObjectNameFromSoftObjectPath(SoftObjectPtr->ToSoftObjectPath())))
 			{
 				// link SoftObjectPtr to the runtime variable
@@ -131,5 +131,5 @@ URemWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* 
 
 	return Extension;
 }
-	
+
 }

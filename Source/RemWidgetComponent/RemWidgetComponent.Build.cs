@@ -7,7 +7,6 @@ namespace UnrealBuildTool.Rules
 	{
 		public RemWidgetComponent(ReadOnlyTargetRules target) : base(target)
 		{
-			PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 			ShadowVariableWarningLevel = WarningLevel.Error;
 			IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 			DefaultBuildSettings = BuildSettingsVersion.Latest;
@@ -25,7 +24,6 @@ namespace UnrealBuildTool.Rules
 					"Engine",
 
 					"UMG",
-					"StructUtils",
 					
 					"RemCommon",
 				}
