@@ -5,6 +5,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "RemWidgetComponentStatics.generated.h"
 
+class UUserWidget;
 class URemWidgetComponentBase;
 class URemWidgetComponentAsExtension;
 
@@ -29,11 +30,11 @@ namespace Rem::WidgetComponent
 
 	REMWIDGETCOMPONENT_API
 	void AddComponentsToWidgetExtension(const URemWidgetComponentAsExtension* Extension);
-	
+
 	REMWIDGETCOMPONENT_API
 	void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Extension);
 
 	REMWIDGETCOMPONENT_API
 	URemWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* UserWidget);
-	
+
 }
