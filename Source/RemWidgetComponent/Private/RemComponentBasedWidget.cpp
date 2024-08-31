@@ -50,6 +50,6 @@ TArray<TObjectPtr<URemWidgetComponentBase>> URemComponentBasedWidget::GetCompone
 FArrayProperty* URemComponentBasedWidget::GetComponentsProperty() const
 {
 	static FArrayProperty* Prop = FindFieldChecked<FArrayProperty>(GetClass(),
-		GET_MEMBER_NAME_CHECKED(URemComponentBasedWidget, Components));
+		FName{GET_MEMBER_NAME_STRING_VIEW_CHECKED(URemComponentBasedWidget, Components)});
 	return Prop;
 }
