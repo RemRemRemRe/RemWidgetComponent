@@ -22,11 +22,11 @@ namespace Rem::WidgetComponent
 {
 	REMWIDGETCOMPONENT_API
 	void ForeachUserWidgetComponent(const UUserWidget* UserWidget,
-		TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)> Predicate);
+		const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)>& Predicate);
 
 	REMWIDGETCOMPONENT_API
 	void ForeachUserWidgetComponent(const URemWidgetComponentAsExtension* Extension,
-		TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)> Predicate);
+		const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)>& Predicate);
 
 	REMWIDGETCOMPONENT_API
 	void AddComponentsToWidgetExtension(const URemWidgetComponentAsExtension* Extension);

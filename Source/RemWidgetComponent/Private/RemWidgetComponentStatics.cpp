@@ -11,21 +11,20 @@
 #include "Templates/RemPropertyHelper.h"
 #include "Templates/RemIteratePropertiesOfType.h"
 #include "Object/RemObjectStatics.h"
-#include "StructUtils/InstancedStruct.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(RemWidgetComponentStatics)
 
 namespace Rem::WidgetComponent
 {
 void ForeachUserWidgetComponent(const UUserWidget* UserWidget,
-	const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)> Predicate)
+	const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)>& Predicate)
 {
 	RemCheckVariable(UserWidget, return;);
 	ForeachUserWidgetComponent(UserWidget->GetExtension<URemWidgetComponentAsExtension>(), Predicate);
 }
 
 void ForeachUserWidgetComponent(const URemWidgetComponentAsExtension* Extension,
-	const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)> Predicate)
+	const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)>& Predicate)
 {
 	RemCheckVariable(Extension, return;);
 
