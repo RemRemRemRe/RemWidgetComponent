@@ -61,7 +61,8 @@ void AddComponentsToWidgetExtension(const URemWidgetComponentAsExtension* Extens
 		URemWidgetComponentBase* ComponentBase = *ObjectMemberPtr;
 		RemCheckVariable(ComponentBase, return);
 
-		UserWidget->AddExtension(ComponentBase);
+		// TODO : refactor to instanced struct
+		//UserWidget->AddExtension(ComponentBase);
 	});
 }
 
