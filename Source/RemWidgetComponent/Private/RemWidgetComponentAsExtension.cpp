@@ -32,4 +32,3 @@ bool URemWidgetComponentAsExtension::RequiresTick() const
 {
 	return false;
 }
-
