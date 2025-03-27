@@ -16,8 +16,7 @@ public class RemWidgetComponent : ModuleRules
 		bUseUnity = false;
 		
 		PrivateDependencyModuleNames.AddRange(
-			new[]
-			{
+			[
 				"Core",
 				"CoreUObject",
 				"Engine",
@@ -25,7 +24,7 @@ public class RemWidgetComponent : ModuleRules
 				"UMG",
 				
 				"RemCommon",
-			}
+			]
 		);
 	}
 }
