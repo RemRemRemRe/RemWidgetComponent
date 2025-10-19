@@ -9,6 +9,7 @@
 #include "RemWidgetComponentLog.h"
 #include "Blueprint/UserWidget.h"
 #include "Macro/RemLogMacros.h"
+#include "UObject/Package.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(RemWidgetComponentBase)
 
@@ -71,7 +72,7 @@ void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupPara
 
 				Object->MarkAsGarbage();
 				
-				Object = StaticFindObjectFastInternal( /*Class=*/ nullptr, DupParams.DestOuter, DupParams.DestName, true);
+				Object = StaticFindObjectFastInternal( /*Class=*/ nullptr, DupParams.DestOuter, DupParams.DestName, EFindObjectFlags::ExactClass);
 			}
 			while (Object);
 		}
