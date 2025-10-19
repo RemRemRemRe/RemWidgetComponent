@@ -32,7 +32,7 @@ void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupPara
 	}
 	
 	// What code bellow fix is :
-	// editor crashes when hit compile and it says :
+	// editor crashes when hit compile, and it says :
 	//	=== Critical error: ===
 	//	Fatal error: [File:Unreal\UnrealEngine\Engine\Source\Runtime\CoreUObject\Private\UObject\UObjectGlobals.cpp] [Line: 3005] 
 	//	Objects have the same fully qualified name but different paths.
