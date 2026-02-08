@@ -68,7 +68,7 @@ void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupPara
 					REN_DoNotDirty | REN_DontCreateRedirectors | REN_ForceNoResetLoaders);
 
 				REM_LOG_FUNCTION(LogRemWidgetComponent, Log, TEXT("Renaming object new name : %s, old name : %s path name : %s"),
-					*Object->GetName(), *DupParams.DestName.ToString(), *Object->GetPathName());
+					Object->GetName(), DupParams.DestName.ToString(), Object->GetPathName());
 
 				Object->MarkAsGarbage();
 				

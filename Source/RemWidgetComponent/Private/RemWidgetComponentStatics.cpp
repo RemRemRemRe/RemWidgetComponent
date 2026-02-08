@@ -88,16 +88,13 @@ void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Exten
 	ForeachUserWidgetComponent(Extension,
 	[&] (URemWidgetComponentBase** ObjectMemberPtr, int32)
 	{
-		const URemWidgetComponentBase* Component = *ObjectMemberPtr;
+		auto* Component = *ObjectMemberPtr;
 		RemCheckVariable(Component, return);
 
-		Property::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), Component,
-		[&] (const FProperty* InProperty, const void* InContainer)
+		Property::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), *Component,
+		[&] (const FSoftObjectProperty& SoftObjectProperty, void* InContainer)
 		{
-			auto* SoftObjectProperty = CastField<const FSoftObjectProperty>(InProperty);
-			RemCheckVariable(SoftObjectProperty, return);
-
-			auto* SoftObjectPtr = SoftObjectProperty->GetPropertyValuePtr_InContainer(const_cast<void*>(InContainer));
+			auto* SoftObjectPtr = SoftObjectProperty.GetPropertyValuePtr_InContainer(InContainer);
 			RemCheckVariable(SoftObjectPtr, return);
 
 			if (SoftObjectPtr->IsNull())
