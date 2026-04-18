@@ -84,7 +84,7 @@ void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupPara
 
 UWorld* URemWidgetComponentBase::GetWorld() const
 {
-	if (Rem::Object::IsClassDefaultObject(*this))
+	if (Rem::Object::IsClassDefaultObject(this))
 	{
 		return nullptr;
 	}
