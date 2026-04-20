@@ -13,33 +13,32 @@
 UCLASS()
 class REMWIDGETCOMPONENT_API URemComponentBasedWidget : public UUserWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 #pragma region Data Members
 
-	UPROPERTY(EditAnywhere, Instanced, BlueprintGetter = GetComponents, Category = "Component")
-	TArray<TObjectPtr<URemWidgetComponentBase>> Components;
+    UPROPERTY(EditAnywhere, Instanced, BlueprintGetter = GetComponents, Category = "Component")
+    TArray<TObjectPtr<URemWidgetComponentBase>> Components;
 
 #pragma endregion Data Members
 
 public:
-	virtual bool Initialize() override;
+    virtual bool Initialize() override;
 
 #if WITH_EDITOR
 
-	virtual void PostCDOCompiled(const FPostCDOCompiledContext& Context) override;
+    virtual void PostCDOCompiled(const FPostCDOCompiledContext& Context) override;
 
 #endif
-	
+
 #pragma region Members Accessors
 
-public:
-	UFUNCTION(BlueprintCallable, Category = "Rem|Component")
-	TArray<URemWidgetComponentBase*> GetComponents() const;
+    UFUNCTION(BlueprintCallable, Category = "Rem|Component")
+    TArray<URemWidgetComponentBase*> GetComponents() const;
 
-	TArray<TObjectPtr<URemWidgetComponentBase>> GetComponentsObjectPtr() const;
+    TArray<TObjectPtr<URemWidgetComponentBase>> GetComponentsObjectPtr() const;
 
-	FArrayProperty* GetComponentsProperty() const;
+    FArrayProperty* GetComponentsProperty() const;
 
 #pragma endregion Members Accessors
 };

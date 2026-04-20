@@ -17,116 +17,117 @@
 namespace Rem::WidgetComponent
 {
 void ForeachUserWidgetComponent(const UUserWidget* UserWidget,
-	const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)>& Predicate)
+    const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)>& Predicate)
 {
-	RemCheckVariable(UserWidget, return;);
-	ForeachUserWidgetComponent(UserWidget->GetExtension<URemWidgetComponentAsExtension>(), Predicate);
+    RemCheckVariable(UserWidget, return;);
+    ForeachUserWidgetComponent(UserWidget->GetExtension<URemWidgetComponentAsExtension>(), Predicate);
 }
 
 void ForeachUserWidgetComponent(const URemWidgetComponentAsExtension* Extension,
-	const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)>& Predicate)
+    const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)>& Predicate)
 {
-	RemCheckVariable(Extension, return;);
+    RemCheckVariable(Extension, return;);
 
-	const FArrayProperty* ComponentsProperty = Extension->GetComponentsProperty();
+    const FArrayProperty* ComponentsProperty = Extension->GetComponentsProperty();
 
-	RemCheckCondition(Rem::Property::IsPropertyClassChildOf(ComponentsProperty->Inner,
-		URemWidgetComponentBase::StaticClass()), return;);
+    RemCheckCondition(Rem::Property::IsPropertyClassChildOf(ComponentsProperty->Inner,
+        URemWidgetComponentBase::StaticClass()), return;);
 
-	Object::ForeachObjectInArray(ComponentsProperty, Extension->GetOuterUUserWidget(),
-		[&] (void* ObjectMemberPtr, const int32 Index)
-	{
-		URemWidgetComponentBase** MemberPtr = static_cast<URemWidgetComponentBase**>(ObjectMemberPtr);
+    Object::ForeachObjectInArray(ComponentsProperty, Extension->GetOuterUUserWidget(),
+        [&](void* ObjectMemberPtr, const int32 Index)
+        {
+            auto MemberPtr = static_cast<URemWidgetComponentBase**>(ObjectMemberPtr);
 
-		Predicate(MemberPtr, Index);
-	});
+            Predicate(MemberPtr, Index);
+        });
 }
 
 void AddComponentsToWidgetExtension(const URemWidgetComponentAsExtension* Extension)
 {
-	RemCheckVariable(Extension, return;);
+    RemCheckVariable(Extension, return;);
 
-	UUserWidget* UserWidget = Extension->GetOuterUUserWidget();
-	RemCheckVariable(UserWidget, return;);
+    UUserWidget* UserWidget = Extension->GetOuterUUserWidget();
+    RemCheckVariable(UserWidget, return;);
 
-	if (UserWidget->IsDesignTime())
-	{
-		return;
-	}
+    if (UserWidget->IsDesignTime())
+    {
+        return;
+    }
 
-	ForeachUserWidgetComponent(Extension,
-	[&](URemWidgetComponentBase** ObjectMemberPtr, int32)
-	{
-		URemWidgetComponentBase* ComponentBase = *ObjectMemberPtr;
-		RemCheckVariable(ComponentBase, return);
+    ForeachUserWidgetComponent(Extension,
+        [&](URemWidgetComponentBase** ObjectMemberPtr, int32)
+        {
+            URemWidgetComponentBase* ComponentBase = *ObjectMemberPtr;
+            RemCheckVariable(ComponentBase, return);
 
-		// TODO : refactor to instanced struct
-		//UserWidget->AddExtension(ComponentBase);
-	});
+            // TODO : refactor to instanced struct
+            //UserWidget->AddExtension(ComponentBase);
+        });
 }
 
 void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Extension)
 {
-	RemCheckVariable(Extension, return;);
+    RemCheckVariable(Extension, return;);
 
-	UUserWidget* UserWidget = Extension->GetOuterUUserWidget();
-	RemCheckVariable(UserWidget, return;);
+    UUserWidget* UserWidget = Extension->GetOuterUUserWidget();
+    RemCheckVariable(UserWidget, return;);
 
-	if (UserWidget->IsDesignTime())
-	{
-		return;
-	}
+    if (UserWidget->IsDesignTime())
+    {
+        return;
+    }
 
-	TMap<FName, UWidget*> NamedWidgetMap;
-	UserWidget->WidgetTree->ForEachWidget([&] (UWidget* Widget)
-	{
-		RemCheckVariable(Widget, return);
+    TMap<FName, UWidget*> NamedWidgetMap;
+    UserWidget->WidgetTree->ForEachWidget([&](UWidget* Widget)
+    {
+        RemCheckVariable(Widget, return);
 
-		NamedWidgetMap.FindOrAdd(Widget->GetFName(), Widget);
-	});
+        NamedWidgetMap.FindOrAdd(Widget->GetFName(), Widget);
+    });
 
-	ForeachUserWidgetComponent(Extension,
-	[&] (URemWidgetComponentBase** ObjectMemberPtr, int32)
-	{
-		auto* Component = *ObjectMemberPtr;
-		RemCheckVariable(Component, return);
+    ForeachUserWidgetComponent(Extension,
+        [&](URemWidgetComponentBase** ObjectMemberPtr, int32)
+        {
+            auto* Component = *ObjectMemberPtr;
+            RemCheckVariable(Component, return);
 
-		Property::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), *Component,
-		[&] (const FSoftObjectProperty& SoftObjectProperty, void* InContainer)
-		{
-			auto* SoftObjectPtr = SoftObjectProperty.GetPropertyValuePtr_InContainer(InContainer);
-			RemCheckVariable(SoftObjectPtr, return);
+            Property::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), *Component,
+                [&](const FSoftObjectProperty& SoftObjectProperty, void* InContainer)
+                {
+                    auto* SoftObjectPtr = SoftObjectProperty.GetPropertyValuePtr_InContainer(InContainer);
+                    RemCheckVariable(SoftObjectPtr, return);
 
-			if (SoftObjectPtr->IsNull())
-			{
-				return;
-			}
+                    if (SoftObjectPtr->IsNull())
+                    {
+                        return;
+                    }
 
-			if (UWidget** Value = NamedWidgetMap.Find(*GetObjectNameFromSoftObjectPath(SoftObjectPtr->ToSoftObjectPath())))
-			{
-				// link SoftObjectPtr to the runtime variable
-				*SoftObjectPtr = *Value;
-				return;
-			}
+                    if (UWidget** Value = NamedWidgetMap.Find(
+                        *GetObjectNameFromSoftObjectPath(SoftObjectPtr->ToSoftObjectPath())))
+                    {
+                        // link SoftObjectPtr to the runtime variable
+                        *SoftObjectPtr = *Value;
+                        return;
+                    }
 
-			RemCheckCondition(false);
-		});
-	});
+                    RemCheckCondition(false);
+                });
+        });
 }
 
 URemWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* UserWidget)
 {
-	RemCheckVariable(UserWidget, return {};);
+    RemCheckVariable(UserWidget, return {};);
 
-	URemWidgetComponentAsExtension* Extension = UserWidget->GetExtension<URemWidgetComponentAsExtension>();
-	if (!Extension)
-	{
-		Extension = UserWidget->AddExtension<URemWidgetComponentAsExtension>();
-	}
+    URemWidgetComponentAsExtension* Extension = UserWidget->GetExtension<URemWidgetComponentAsExtension>();
+    if (!Extension)
+    {
+        Extension = UserWidget->AddExtension<URemWidgetComponentAsExtension>();
+    }
 
-	RemCheckVariable(Extension);
+    RemCheckVariable(Extension);
 
-	return Extension;
+    return Extension;
 }
 
 }
