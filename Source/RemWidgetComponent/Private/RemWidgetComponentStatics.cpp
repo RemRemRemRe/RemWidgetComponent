@@ -91,7 +91,7 @@ void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Exten
             auto* Component = *ObjectMemberPtr;
             RemCheckVariable(Component, return);
 
-            Property::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), *Component,
+            Property::IteratePropertiesOfType<FSoftObjectProperty>(Component->GetClass(), MakeNotNull(Component),
                 [&](const FSoftObjectProperty& SoftObjectProperty, void* InContainer)
                 {
                     auto* SoftObjectPtr = SoftObjectProperty.GetPropertyValuePtr_InContainer(InContainer);
