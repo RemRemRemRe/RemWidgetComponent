@@ -35,7 +35,7 @@ void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupPara
     // What code bellow fix is :
     // editor crashes when hit compile, and it says :
     //	=== Critical error: ===
-    //	Fatal error: [File:Unreal\UnrealEngine\Engine\Source\Runtime\CoreUObject\Private\UObject\UObjectGlobals.cpp] [Line: 3005] 
+    //	Fatal error: [File:Unreal\UnrealEngine\Engine\Source\Runtime\CoreUObject\Private\UObject\UObjectGlobals.cpp] [Line: 3005]
     //	Objects have the same fully qualified name but different paths.
     //	New Object: Component_C /Game/Developers/HUD/HUDTest.HUDTest:Widget_C_2.Component_C_0
     //	Existing Object: REINST_Component_C_35 /Game/Developers/HUD/HUDTest.HUDTest:Widget_C_2.Component_C_0*/
@@ -66,7 +66,7 @@ void URemWidgetComponentBase::PreDuplicate(FObjectDuplicationParameters& DupPara
             do
             {
                 Object->Rename(nullptr, GetTransientPackage(),
-                    REN_DoNotDirty | REN_DontCreateRedirectors | REN_ForceNoResetLoaders);
+                    REN_DoNotDirty | REN_DontCreateRedirectors);
 
                 REM_LOG_FUNCTION(LogRemWidgetComponent, Log,
                     TEXT("Renaming object new name : %s, old name : %s path name : %s"),
