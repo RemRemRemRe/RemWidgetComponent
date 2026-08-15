@@ -1,55 +1,68 @@
-// Copyright RemRemRemRe, All Rights Reserved.
-
+// Copyright RemRemRemRe. 2026. All Rights Reserved.
 
 #include "RemComponentBasedWidget.h"
 
-#include "RemWidgetComponentAsExtension.h"
 #include "RemWidgetComponentStatics.h"
-#include "Macro/RemAssertionMacros.h"
+#include "RemWidgetComponentStats.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(RemComponentBasedWidget)
 
 bool URemComponentBasedWidget::Initialize()
 {
-    if (URemWidgetComponentAsExtension* Component = Rem::WidgetComponent::GetOrAddWidgetComponentAsExtension(this);
-        ensureAlways(Component))
+    if (!Super::Initialize())
     {
-        Component->SetComponentsFiledPath(GetComponentsProperty());
-
-        Rem::WidgetComponent::AddComponentsToWidgetExtension(Component);
+        return false;
     }
 
-    return Super::Initialize();
+    if (IsDesignTime())
+    {
+        return true;
+    }
+
+    // The widget tree is fully built after Super::Initialize(): link soft widget
+    // references by name first, then initialize the components (they may resolve
+    // their targets inside Initialize).
+    Rem::WidgetComponent::LinkComponentsToWidgetTree(*this, Components);
+    Components.TryInitialize(*this);
+
+    return true;
 }
 
-#if WITH_EDITOR
-
-void URemComponentBasedWidget::PostCDOCompiled(const FPostCDOCompiledContext& Context)
+void URemComponentBasedWidget::NativeDestruct()
 {
-    Super::PostCDOCompiled(Context);
+    Components.TryUninitialize();
 
-    // CDO will not run Initialize, so add the component here
-    URemWidgetComponentAsExtension* Extension = Rem::WidgetComponent::GetOrAddWidgetComponentAsExtension(this);
-    RemCheckVariable(Extension, return);
-
-    Extension->SetComponentsFiledPath(GetComponentsProperty());
+    Super::NativeDestruct();
 }
 
-#endif
-
-TArray<URemWidgetComponentBase*> URemComponentBasedWidget::GetComponents() const
+void URemComponentBasedWidget::NativeTick(const FGeometry& MyGeometry, const float InDeltaTime)
 {
-    return Components;
+    Super::NativeTick(MyGeometry, InDeltaTime);
+
+    SCOPE_CYCLE_COUNTER(STAT_WidgetComponent);
+
+    if (!Components.IsInitialized())
+    {
+        return;
+    }
+
+    Components.ForEachComponent<FRemComponentBase>(
+        [&](FRemComponentBase& Component, const int32 Index, const UScriptStruct&)
+        {
+            const FRemComponentBase::FContext Context{&Components, Index};
+            if (Component.ShouldTick(Context))
+            {
+                Component.Tick(Context, InDeltaTime);
+            }
+        });
 }
 
-TArray<TObjectPtr<URemWidgetComponentBase>> URemComponentBasedWidget::GetComponentsObjectPtr() const
+Rem::TNotNull<FRemComponentContainer*> URemComponentBasedWidget::GetComponentContainer()
 {
-    return Components;
+    return &Components;
 }
 
-FArrayProperty* URemComponentBasedWidget::GetComponentsProperty() const
+Rem::TNotNull<const FRemComponentContainer*> URemComponentBasedWidget::GetComponentContainer() const
 {
-    static FArrayProperty* Prop = FindFieldChecked<FArrayProperty>(GetClass(),
-        FName{GET_MEMBER_NAME_ANSI_STRING_VIEW_CHECKED(URemComponentBasedWidget, Components)});
-    return Prop;
+    return &Components;
 }

@@ -1,39 +1,23 @@
-﻿// Copyright RemRemRemRe, All Rights Reserved.
+// Copyright RemRemRemRe. 2026. All Rights Reserved.
 
 #pragma once
 
-#include "Kismet/BlueprintFunctionLibrary.h"
-#include "RemWidgetComponentStatics.generated.h"
+#include "CoreMinimal.h"
 
 class UUserWidget;
-class URemWidgetComponentBase;
-class URemWidgetComponentAsExtension;
-
-
-UCLASS()
-class REMWIDGETCOMPONENT_API URemWidgetComponentStatics : public UBlueprintFunctionLibrary
-{
-    GENERATED_BODY()
-
-};
+struct FRemComponentContainer;
 
 namespace Rem::WidgetComponent
 {
+/**
+ * Resolves every TSoftObjectPtr<UWidget> field on every component against the
+ * widget tree of the given widget, by the object name embedded in the soft path.
+ *
+ * The name is the decoupling contract: the same component can be reused on any
+ * widget that contains a widget with the matching name. Linking is skipped at
+ * design time.
+ */
 REMWIDGETCOMPONENT_API
-void ForeachUserWidgetComponent(const UUserWidget* UserWidget,
-    const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)>& Predicate);
-
-REMWIDGETCOMPONENT_API
-void ForeachUserWidgetComponent(const URemWidgetComponentAsExtension* Extension,
-    const TFunctionRef<void(URemWidgetComponentBase** MemberPtr, int32 Index)>& Predicate);
-
-REMWIDGETCOMPONENT_API
-void AddComponentsToWidgetExtension(const URemWidgetComponentAsExtension* Extension);
-
-REMWIDGETCOMPONENT_API
-void LinkSoftObjectToRuntimeVariable(const URemWidgetComponentAsExtension* Extension);
-
-REMWIDGETCOMPONENT_API
-URemWidgetComponentAsExtension* GetOrAddWidgetComponentAsExtension(UUserWidget* UserWidget);
+void LinkComponentsToWidgetTree(const UUserWidget& UserWidget, FRemComponentContainer& Components);
 
 }

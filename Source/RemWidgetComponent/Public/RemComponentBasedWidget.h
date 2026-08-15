@@ -1,44 +1,48 @@
-﻿// Copyright RemRemRemRe, All Rights Reserved.
+// Copyright RemRemRemRe. 2026. All Rights Reserved.
 
 #pragma once
 
-#include "RemWidgetComponentBase.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/RemComponentContainer.h"
+#include "Components/RemComponentContainerOwnerInterface.h"
+
 #include "RemComponentBasedWidget.generated.h"
 
-
 /**
- * A widget who will have many components ^^
+ * A widget hosting reusable behavior components (EC pattern).
+ *
+ * Components are instanced structs stored in a FRemComponentContainer (RemCommon).
+ * The widget self-drives their lifecycle:
+ *  - Initialize (after the widget tree is ready) links soft widget references by
+ *    name, then initializes the components;
+ *  - Destruct uninitializes the components;
+ *  - NativeTick dispatches ShouldTick-gated Tick to every component.
+ *
+ * @note The widget ticks whenever the engine ticks it (BP subclasses tick always);
+ *       per-component ticking is gated by FRemComponentBase::ShouldTick.
  */
-UCLASS()
-class REMWIDGETCOMPONENT_API URemComponentBasedWidget : public UUserWidget
+UCLASS(Blueprintable)
+class REMWIDGETCOMPONENT_API URemComponentBasedWidget : public UUserWidget,
+    public IRemComponentContainerOwnerInterface
 {
     GENERATED_BODY()
 
 #pragma region Data Members
 
-    UPROPERTY(EditAnywhere, Instanced, BlueprintGetter = GetComponents, Category = "Component")
-    TArray<TObjectPtr<URemWidgetComponentBase>> Components;
+    UPROPERTY(EditAnywhere, Category = "Component")
+    FRemComponentContainer Components{};
 
 #pragma endregion Data Members
 
 public:
     virtual bool Initialize() override;
+    virtual void NativeDestruct() override;
+    virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
-#if WITH_EDITOR
+#pragma region IRemComponentContainerOwnerInterface
 
-    virtual void PostCDOCompiled(const FPostCDOCompiledContext& Context) override;
+    virtual Rem::TNotNull<FRemComponentContainer*> GetComponentContainer() override;
+    virtual Rem::TNotNull<const FRemComponentContainer*> GetComponentContainer() const override;
 
-#endif
-
-#pragma region Members Accessors
-
-    UFUNCTION(BlueprintCallable, Category = "Rem|Component")
-    TArray<URemWidgetComponentBase*> GetComponents() const;
-
-    TArray<TObjectPtr<URemWidgetComponentBase>> GetComponentsObjectPtr() const;
-
-    FArrayProperty* GetComponentsProperty() const;
-
-#pragma endregion Members Accessors
+#pragma endregion IRemComponentContainerOwnerInterface
 };
