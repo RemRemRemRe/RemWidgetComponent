@@ -36,11 +36,14 @@ class REMWIDGETCOMPONENT_API URemComponentBasedWidget : public UUserWidget,
 
 public:
     virtual bool Initialize() override;
+
+protected:
     virtual void NativeDestruct() override;
     virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 #pragma region IRemComponentContainerOwnerInterface
 
+public:
     virtual Rem::TNotNull<FRemComponentContainer*> GetComponentContainer() override;
     virtual Rem::TNotNull<const FRemComponentContainer*> GetComponentContainer() const override;
 
