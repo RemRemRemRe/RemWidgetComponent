@@ -49,8 +49,8 @@ void URemComponentBasedWidget::NativeTick(const FGeometry& MyGeometry, const flo
     Components.ForEachComponent<FRemComponentBase>(
         [&](FRemComponentBase& Component, const int32 Index, const UScriptStruct&)
         {
-            const FRemComponentBase::FContext Context{&Components, Index};
-            if (Component.ShouldTick(Context))
+            if (const FRemComponentBase::FContext Context{.OwnerInstance = &Components, .ComponentIndex = Index};
+                Component.ShouldTick(Context))
             {
                 Component.Tick(Context, InDeltaTime);
             }
