@@ -21,6 +21,11 @@
             "Name": "RemWidgetComponent",
             "Type": "Runtime",
             "LoadingPhase": "Default"
+        },
+        {
+            "Name": "RemWidgetComponentTest",
+            "Type": "UncookedOnly",
+            "LoadingPhase": "Default"
         }
     ],
     "Plugins": [
